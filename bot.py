@@ -106,7 +106,7 @@ async def analyze_trade(
     """
     # Check if user has required role
     # Add your allowed role names here (case-sensitive)
-    ALLOWED_ROLES = ["Trader", "Premium", "Admin"]  # Change these to your role names
+    ALLOWED_ROLES = ["everyone", "Patreon", "Admin"]  # Change these to your role names
     
     user_roles = [role.name for role in interaction.user.roles]
     has_permission = any(role in ALLOWED_ROLES for role in user_roles)
