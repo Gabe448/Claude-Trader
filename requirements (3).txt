@@ -1,0 +1,3 @@
+git+https://github.com/Rapptz/discord.py@master
+anthropic==0.40.0
+python-dotenv==1.0.0
