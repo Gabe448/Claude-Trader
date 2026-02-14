@@ -104,19 +104,22 @@ async def analyze_trade(
     """
     Analyze a trading chart using Claude
     """
-    # Check if user has required role
-    # Add your allowed role names here (case-sensitive)
-    ALLOWED_ROLES = ["everyone", "Patreon", "Admin"]  # Change these to your role names
+    # Role restriction settings
+    # Set to ["@everyone"] to allow all users
+    # Or set to specific roles like ["Trader", "Premium", "VIP"] to restrict
+    ALLOWED_ROLES = ["@everyone"]  # Change this to restrict access
     
-    user_roles = [role.name for role in interaction.user.roles]
-    has_permission = any(role in ALLOWED_ROLES for role in user_roles)
-    
-    if not has_permission:
-        await interaction.response.send_message(
-            f"❌ You don't have permission to use this command. Required roles: {', '.join(ALLOWED_ROLES)}",
-            ephemeral=True
-        )
-        return
+    # Check if user has required role (skip check if @everyone is in the list)
+    if "@everyone" not in ALLOWED_ROLES:
+        user_roles = [role.name for role in interaction.user.roles]
+        has_permission = any(role in ALLOWED_ROLES for role in user_roles)
+        
+        if not has_permission:
+            await interaction.response.send_message(
+                f"❌ You don't have permission to use this command. Required roles: {', '.join(ALLOWED_ROLES)}",
+                ephemeral=True
+            )
+            return
     
     # Defer the response (ephemeral = only you can see it)
     await interaction.response.defer(ephemeral=True)
